@@ -23,3 +23,4 @@ mvn clean package
 ## References
 * [Setting Up Maven For Spock](http://goo.gl/eZsnJW)
 * [An Introduction To Specifications with Spock](http://goo.gl/UYZa9M)
+* [More about Spock Specifications](http://goo.gl/Aghn9f)
