@@ -1,6 +1,7 @@
 package us.juggl.twentysixteen.february.spock
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 /**
  * An example of a Spock BDD Specification
@@ -12,11 +13,11 @@ class ExampleSpec extends Specification {
      * A test which ensures that adding 2 values produces the correct result
      */
     def "adding 2 integers should work"() {
-        setup:
+        given: "a=10 and b=12"
         def a = 10
         def b = 12
 
-        when: "2 values, 10 & 12, are added"
+        when: "#a and #b are added"
         def result = example.add(a, b)
 
         then: "The result MUST be 22"
@@ -28,16 +29,39 @@ class ExampleSpec extends Specification {
      * data table
      * @param a The first addend
      * @param b The second addend
-     * @param c The expected result
+     * @param c The SUM of {@code a} AND {@code b}
      */
-    def "Adding 2 integers should always return accurate values"(int a, int b, int c) {
-        expect:
-        example.add(a, b) == c
+    @Unroll
+    def "Adding #a to #b should always return #c"(int a, int b, int c) {
+        given: "a = #a, b = #b, and c = #c"
+
+        when: "a(#a) is added to b(#b)"
+        def result = example.add(a, b)
+
+        then: "The result must be c(#c)"
+        result == c
 
         where:
-        a | b | c
-        1 | 2 | 3
-        2 | 4 | 6
-        12| 13| 25
+        a | b  || c
+        1 | 2  || 3
+        2 | 4  || 6
+        12| 13 || 25
+    }
+
+    @Unroll
+    def "Adding non-integers should fail"() {
+        given: "a = #a, b = #b, and c = #c"
+
+        when: "a(#a) is added to b(#b)"
+        def result = example.add(a, b)
+
+        then: "An error must occur"
+        def e = thrown(MissingMethodException)
+
+        where:
+        a   | b    || c
+        1.1 | 2.1  || 3.2
+        1   | 2.1  || 3.1
+        2   | 1.1  || 3.1
     }
 }
