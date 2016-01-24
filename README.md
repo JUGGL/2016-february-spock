@@ -19,3 +19,7 @@ git clone https://github.com/JUGGL/february-spock.git
 cd february-spock
 mvn clean package
 ```
+
+## References
+* [Setting Up Maven For Spock](http://goo.gl/eZsnJW)
+* [An Introduction To Specifications with Spock](http://goo.gl/UYZa9M)
