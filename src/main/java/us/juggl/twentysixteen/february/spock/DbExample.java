@@ -1,15 +1,28 @@
 package us.juggl.twentysixteen.february.spock;
 
-import javax.sql.DataSource;
+import us.juggl.twentysixteen.february.spock.pojo.Customer;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManagerFactory;
 
 /**
  *
  */
 public class DbExample {
 
-    private DataSource ds;
+    private EntityManagerFactory emf;
 
-    public DbExample(DataSource ds) {
-        this.ds = ds;
+    @Inject
+    public DbExample(EntityManagerFactory emf) {
+        this.emf = emf;
+    }
+
+    public Customer getCustomer(long id) throws IllegalStateException {
+        try {
+            Customer result = emf.createEntityManager().find(Customer.class, id);
+            return result;
+        } catch (IllegalStateException ise) {
+            return null;
+        }
     }
 }
